@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,6 +21,8 @@ public class LoginUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    private ArrayList<User> users=null;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +39,13 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
+        //Supposed to be initialized outside of this, and then reference to the gui
+        //by having it in the constructor. ie, public LoginUI(ArrayList<User> userDBList){users=userDBList;}
+        
+        
+        
+        
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Username:");
@@ -44,7 +57,9 @@ public class LoginUI extends javax.swing.JFrame {
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+
+            	LoginPressed(evt);
+            
             }
         });
 
@@ -96,8 +111,48 @@ public class LoginUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LoginPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+    	String username=null, password=null;
+    	try {
+    	username=jTextField2.getText();
+    	password=new String(jPasswordField1.getPassword());
+    	}
+    	catch(Exception e)
+    	{
+    		JOptionPane.showMessageDialog(null, "Error has occurred in getting username/password.");
+    	}
+    	if(users==null)
+    	{
+    		JOptionPane.showMessageDialog(null, "No UserDB or passing constructor a list, so faking the creation of a list of users.");
+    		users=new ArrayList<User>();
+    		users.add(new User(-1, "u1", "p1", 'o'));//o for operator, -1 for id (not supposed
+    												//to be created), u is username, p is password.
+    		users.add(new User(-1, "u2", "p2", 'b'));//a for buyer, -1 for artificial created
+    	}
+    	for(int i=0; i<users.size(); i++)
+    	{
+    		//for debugging, this is to show the username adn password are what they are.
+    	//	JOptionPane.showMessageDialog(null, "Username Entered is: "+username+" Password is: "+password);
+    		if(username.equals(users.get(i).getCredentials().getUsername()))
+    			if(password.equals(users.get(i).getCredentials().getPassword()))
+    			{
+    				//somehow close the window.
+    				this.setVisible(false);
+    				JOptionPane.showMessageDialog(null, "THIS IS WHERE YOU OPEN ANOTHER GUI :D");
+    				if(users.get(i).getType()=='o')
+    					JOptionPane.showMessageDialog(null, "This is where u launch operator ui");
+    				if(users.get(i).getType()=='b')
+    				{
+    					JOptionPane.showMessageDialog(null, "This is where u launch promotions");
+    					JOptionPane.showMessageDialog(null, "This is where u launch buyer UI");
+    				}
+    				this.dispose();
+    				return;
+    			}
+    	}
+    	
+    	JOptionPane.showMessageDialog(null, "Login Credentials Not Accepted, Try Again.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
