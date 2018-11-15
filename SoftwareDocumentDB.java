@@ -16,7 +16,7 @@ public class SoftwareDocumentDB {
 	private static SoftwareDocumentDB instance=null;
 	private SoftwareDocumentDB() {}
 	private ArrayList<Document> doc_In_DB;
-	public SoftwareDocumentDB getSoftwareDocumentDB()
+	public static SoftwareDocumentDB getSoftwareDocumentDB()
 	{
 		if(instance==null)
 			instance=new SoftwareDocumentDB();
