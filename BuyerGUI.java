@@ -29,10 +29,11 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     private void initComponents() {
 
         buyerListener = new BuyerGUIListener(this);
-        
+        cart = getCart();
+
         regControl=new RegistrationController();
         invControl=new InventoryController();
-        
+
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -322,10 +323,11 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public BuyerGUIListener buyerListener;
+    public Cart cart;
     public RegistrationController regControl;
     public InventoryController invControl;
-    public BuyerGUIListener buyerListener;
-    
+
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
     public javax.swing.JButton jButton2;
@@ -379,7 +381,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         if(e.getSource() == jButton7) // Search
             search();
         // Promotions:
-        if(e.getSource() == jButton8) // Add to cart
+        if(e.getSource() == jButton8) // Add
             addPromotions();
         if(e.getSource() == jButton9) // Refresh
             refreshPromotions();
@@ -388,10 +390,10 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     /**
-     *
+     * removes selected item from cart and list
      */
     private void removeShoppingItem(){
-      
+
     }
 
     /**
@@ -416,7 +418,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     /**
-     *
+     * add to cart
      */
     private void addPromotions(){
 
@@ -433,7 +435,16 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      *
      */
     private void switchStatus(){
-    	
+
+    }
+
+    public void updateCart(){
+      buyerGui.jListModel1.removeAllElements();
+      if(buyerGui.cart == null){
+        subListModel.addElement("Your Shopping Cart is Empty!");
+      } else if( buyerGui.cart. )
+
+
     }
 
 
