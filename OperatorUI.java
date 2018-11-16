@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -53,6 +55,29 @@ public class OperatorUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+            	AddPressed(evt);
+            
+            }
+        });
+        
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+            	RemovePressed(evt);
+            
+            }
+        });
+        
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+            	UpdatePressed(evt);
+            
+            }
+        });
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Docs:");
@@ -104,6 +129,91 @@ public class OperatorUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void AddPressed(java.awt.event.ActionEvent evt) {
+    	String Title=JOptionPane.showInputDialog("Please enter the Title of the Document");
+    	if(Title==null)
+    	{
+    		JOptionPane.showMessageDialog(null, "Must enter a valid Title.");
+    	    return;
+    	}
+    	int ISBN=getLargest()+1;	//dont know how ISBNs work but... suppose for this purpose the ISBNs autoincrement.
+    	ArrayList<String> authors=new ArrayList<String>();
+    	int authNum=1;
+    	String author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+    	while(author==null)
+    	{
+    		JOptionPane.showMessageDialog(null, "Must enter at least one author.");
+    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+    	}
+    	while(author!=null)
+    	{
+    		authNum++;
+    		authors.add(author);
+    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+    	}
+    	String filePath=JOptionPane.showInputDialog("Please enter filepath for this file");
+    	while(filePath==null)
+    	{
+    		JOptionPane.showMessageDialog(null, "Must enter a filepath.");
+    		filePath=JOptionPane.showInputDialog("Please enter filepath for this file");
+    	}
+    	double price=Double.parseDouble(JOptionPane.showInputDialog("Please enter price for this document"));
+    	if(price<=0)
+    	{
+    		JOptionPane.showMessageDialog(null, "Detected error in price, default price of 59.99 is added.");
+    		price=59.99;
+    	}
+    	Document tempDoc=new Document(Title, ISBN, authors, filePath, price);
+		int confirm=JOptionPane.showConfirmDialog(null, "Document: " +tempDoc.toString()+"\nAre you satisfied with this document?");
+		if(confirm==JOptionPane.NO_OPTION) {
+			JOptionPane.showMessageDialog(null, "Ok, no document is added.");
+	    	return;
+		}
+		int result=-999;
+		if(confirm==JOptionPane.YES_OPTION) {
+			result=modification.modifyFile("Add", tempDoc);			
+		}
+    	
+    	if(result==-1)
+    		JOptionPane.showMessageDialog(null, "An exception has occurred.");
+    	if(result==0)
+    		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
+    	if(result==1)
+    	{
+    		JOptionPane.showMessageDialog(null, "Success.");
+    		docList.add(tempDoc);
+    	}
+    	
+    	
+    	UpdateDocList();
+    }
+    private int getLargest()
+    {
+    	int id=0;
+    	for(int i=0; i<docList.size(); i++)
+    		id=docList.get(i).getISBN();
+    	return id;
+    }
+    
+    private void RemovePressed(java.awt.event.ActionEvent evt) {
+        
+    	UpdateDocList();
+    }
+    
+    private void UpdatePressed(java.awt.event.ActionEvent evt) {
+        
+    	UpdateDocList();
+    }
+    
+    private void UpdateDocList()
+    {
+    	jListModel1.clear();
+    	for(int i=0; i<docList.size(); i++)
+    		jListModel1.addElement(docList.get(i).toString());
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -145,7 +255,7 @@ public class OperatorUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
-    private javax.swing.DefaultListModel jListModel1;
+    private javax.swing.DefaultListModel<String> jListModel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

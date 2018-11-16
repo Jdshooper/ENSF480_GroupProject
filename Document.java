@@ -31,12 +31,12 @@ public class Document {
 	public String toString()
 	{
 		//assumes working document, it should have all these.
-		String ultimateString=name;
-		ultimateString+=ISBN;
+		String ultimateString=name+" ";
+		ultimateString+=String.valueOf(ISBN)+" ";
 		for(int i=0; i<authors.size(); i++)
-			ultimateString+=authors.get(i);
-		ultimateString+=filePath;
-		ultimateString+=price;
+			ultimateString+=authors.get(i)+", ";
+		ultimateString+=filePath+" ";
+		ultimateString+=String.valueOf(price);
 		return ultimateString;
 	}
 	
