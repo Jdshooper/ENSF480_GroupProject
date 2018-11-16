@@ -57,10 +57,19 @@ public class SoftwareDocumentDBBroker {
 		return SendUpdateQuery("INSERT INTO Document VALUES {"+docModified.toString()+"};");	
 	}
 	
+	//document title has [isbn];;Titlename
 	private boolean updateFile(Document docModified) throws CannotModifyFileException {
-		if(removeFile(docModified))
-			if(addFile(docModified))
+	
+		String [] ISBNTitle=docModified.getName().split(";;");
+		for(int i=0; i<database.getDoc_In_DB().size(); i++)
+		{
+			if(Integer.parseInt(ISBNTitle[0])==database.getDoc_In_DB().get(i).getISBN())
+			{
+				database.getDoc_In_DB().get(i).setName(docModified.getName());
+				database.getDoc_In_DB().get(i).setPrice(docModified.getPrice());
 				return true;
+			}
+		}
 		//functionally, this works. Database wise, it is different since UPDATE is a statement, 
 		//however there is no database so this works easier and it is fine.
 		return false;

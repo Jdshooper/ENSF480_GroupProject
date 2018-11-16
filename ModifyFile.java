@@ -58,8 +58,4 @@ public class ModifyFile {
 		return true;
 	}
 	
-	public void setDoc(Document x)
-	{
-		theDoc=x;
-	}
 }

@@ -233,7 +233,84 @@ public class OperatorUI extends javax.swing.JFrame {
     }
     
     private void UpdatePressed(java.awt.event.ActionEvent evt) {
-        
+    	int index=jList1.getSelectedIndex();
+		if(index==-1)
+		{
+			return;
+		}
+		String Document=jListModel1.get(index);
+		String [] block=Document.split(",");//needs 2 splits
+		String [] TitleISBN=block[0].split(" ");
+		TitleISBN[0]=TitleISBN[0].replaceAll("\\s", "");
+		TitleISBN[1]=TitleISBN[1].replaceAll("\\s", "");
+		//cannot modify authors. can enable but seems unnecessary.
+//		String [] Authors=block[1].split(" ");
+//		for(int i=0; i<Authors.length; i++)
+//			Authors[i]=Authors[i].replaceAll("\\s", "");
+		String [] FilepathPrice=block[2].split(" ");
+		FilepathPrice[0]=FilepathPrice[0].replaceAll("\\s", "");
+		FilepathPrice[1]=FilepathPrice[1].replaceAll("\\s", "");
+		
+		String attribute=null;
+		int status=-999;
+		ArrayList<String> tempNULL=new ArrayList<String>();
+		tempNULL.add("NULL");
+		attribute=JOptionPane.showInputDialog("Which Attribute Would You Like To Modify?");
+		attribute=attribute.toLowerCase();
+		if(attribute.equals("Title")||attribute.equals("title"))
+		{
+			String newTitle=null;
+			while(newTitle==null)
+				newTitle=JOptionPane.showInputDialog("What is the new Title?");
+			
+			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+newTitle,-999,tempNULL,
+					FilepathPrice[0], Double.parseDouble(FilepathPrice[1]) ));
+		}
+		else if(attribute.equals("isbn")||attribute.equals("filepath"))
+			JOptionPane.showMessageDialog(null, "Cannot change ISBN or filePath");
+		else if(attribute.equals("price"))
+		{
+			String price=null;
+			double p=-1;
+			while(price==null||p<0)
+			{
+				price=JOptionPane.showInputDialog("What is the new price? Also needs to be positive");
+				p=Double.parseDouble(price);
+			}
+			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+TitleISBN[0],-999,tempNULL,
+					FilepathPrice[0], Double.parseDouble(price) ));
+		}
+		//not modifying author.
+//		else if(attribute.equals("author"))
+//		{
+//			ArrayList<String> authors=new ArrayList<String>();
+//	    	int authNum=1;
+//	    	String author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+//	    	while(author==null)
+//	    	{
+//	    		JOptionPane.showMessageDialog(null, "Must enter at least one author.");
+//	    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+//	    	}
+//	    	while(author!=null)
+//	    	{
+//	    		authNum++;
+//	    		authors.add(author);
+//	    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+//	    	}
+//		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Invalid attribute to modify. Try again.");
+			return;
+		}
+		
+		if(result==-1)
+    		JOptionPane.showMessageDialog(null, "An exception has occurred.");
+    	if(result==0)
+    		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
+    	if(result==1)
+    		JOptionPane.showMessageDialog(null, "Success.");
+		
     	UpdateDocList();
     }
     
