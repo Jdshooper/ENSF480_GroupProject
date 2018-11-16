@@ -44,8 +44,17 @@ public class SoftwareDocumentDBBroker {
 	private boolean addFile(Document docModified) throws CannotModifyFileException {
 		//TODO: Make this work. since it DOES NOT WORK CURRENTLY 11/12/2018
 		//NOTE, IF ADDFILE IS ADDING FILE WITH SAME ISBN, DELETE THE ONE ALREADY IN DATABASE, BY DOING removeFile.
-		throw new CannotModifyFileException("Cannot add file currently. Functionality is unavalible.");
-	//	return false;
+		
+		for(int i=0; i<database.getDoc_In_DB().size(); i++)
+		{
+			if(database.getDoc_In_DB().get(i).getISBN()==docModified.getISBN())
+				{
+					throw new CannotModifyFileException("Cannot add a file, there is a conflict in ISBN");
+				}
+			
+		}
+		database.getDoc_In_DB().add(docModified);
+		return SendUpdateQuery("INSERT INTO Document VALUES {"+docModified.toString()+"};");	
 	}
 	
 	private boolean updateFile(Document docModified) throws CannotModifyFileException {
@@ -60,6 +69,7 @@ public class SoftwareDocumentDBBroker {
 	private boolean removeFile(Document docModified) {
 		ArrayList<Document> DBDocs=database.getDoc_In_DB();
 		Document temp;
+		
 		for(int i=0; i<DBDocs.size(); i++)
 		{
 			temp=DBDocs.get(i);

@@ -32,10 +32,10 @@ public class Document {
 	{
 		//assumes working document, it should have all these.
 		String ultimateString=name+" ";
-		ultimateString+=String.valueOf(ISBN)+" ";
+		ultimateString+=String.valueOf(ISBN)+", ";
 		for(int i=0; i<authors.size(); i++)
-			ultimateString+=authors.get(i)+", ";
-		ultimateString+=filePath+" ";
+			ultimateString+=authors.get(i)+" ";
+		ultimateString+=", "+filePath+" ";
 		ultimateString+=String.valueOf(price);
 		return ultimateString;
 	}

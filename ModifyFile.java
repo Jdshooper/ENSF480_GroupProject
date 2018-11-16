@@ -54,7 +54,8 @@ public class ModifyFile {
 	public boolean createFile(Document x)
 	{
 		//THIS SHOULD CREATE THE FILE THAT THE USER SELECTED FROM THEIR COMPUTER IN BOUNDARY
-		return false;
+		//HOWEVER, NO DATABASE IMPLEMENTED, SO THIS ONLY DEALS WITH OBJECTS.
+		return true;
 	}
 	
 	public void setDoc(Document x)

@@ -17,7 +17,8 @@ public class OperatorUI extends javax.swing.JFrame {
     /**
      * Creates new form OperatorUI
      */
-    public OperatorUI() {
+    public OperatorUI(ArrayList<Document> dl) {
+    	docList=dl;
         initComponents();
         if(docList==null)
         {
@@ -29,6 +30,7 @@ public class OperatorUI extends javax.swing.JFrame {
         	docList.add(new Document("Document 2", -1, authorlist, "thePath2", 29.99));
         	docList.add(new Document("Document 3", -1, authorlist, "thePath3", 39.99));
         }
+        UpdateDocList();
         modification=new ModifyFile();
     }
 
@@ -51,6 +53,8 @@ public class OperatorUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
+ 
+        
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -59,7 +63,7 @@ public class OperatorUI extends javax.swing.JFrame {
             }
         });
         
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	RemovePressed(evt);
@@ -67,7 +71,7 @@ public class OperatorUI extends javax.swing.JFrame {
             }
         });
         
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	UpdatePressed(evt);
@@ -122,6 +126,7 @@ public class OperatorUI extends javax.swing.JFrame {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,10 +181,8 @@ public class OperatorUI extends javax.swing.JFrame {
     	if(result==0)
     		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
     	if(result==1)
-    	{
     		JOptionPane.showMessageDialog(null, "Success.");
-    		docList.add(tempDoc);
-    	}
+    	
     	
     	
     	UpdateDocList();
@@ -193,7 +196,39 @@ public class OperatorUI extends javax.swing.JFrame {
     }
     
     private void RemovePressed(java.awt.event.ActionEvent evt) {
-        
+    	int index=jList1.getSelectedIndex();
+		if(index==-1)
+		{
+			return;
+		}
+		String Document=jListModel1.get(index);
+		String [] block=Document.split(",");//needs 2 splits
+		String [] TitleISBN=block[0].split(" ");
+		String [] Authors=block[1].split(" ");
+		String [] FilepathPrice=block[2].split(" ");
+		
+		ArrayList<String> tempAuth=new ArrayList<String>();
+		tempAuth.add("tempval");
+		Document temp=new Document("tempval", Integer.parseInt(TitleISBN[1]), tempAuth, "tempval", 99.99);
+		
+		int confirm=JOptionPane.showConfirmDialog(null, "Document: " +Document+"\nAre you satisfied with this document?");
+		if(confirm==JOptionPane.NO_OPTION) {
+			JOptionPane.showMessageDialog(null, "Ok, no document is removed.");
+	    	return;
+		}
+		int result=-999;
+		if(confirm==JOptionPane.YES_OPTION) {
+			result=modification.modifyFile("Remove", temp);			
+		}
+		
+		if(result==-1)
+    		JOptionPane.showMessageDialog(null, "An exception has occurred.");
+    	if(result==0)
+    		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
+    	if(result==1)
+    		JOptionPane.showMessageDialog(null, "Success.");
+    	
+		
     	UpdateDocList();
     }
     
@@ -237,17 +272,28 @@ public class OperatorUI extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        ArrayList<Document>documentsList=new ArrayList<Document>();
+    	ArrayList<String> authorlist=new ArrayList<String>();
+    	authorlist.add("author1");
+    	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
+    	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
+    	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
+     
+        DatabaseSetup setup=new DatabaseSetup(documentsList);
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OperatorUI().setVisible(true);
+                new OperatorUI(documentsList).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-		private ModifyFile modification;
-    private ArrayList<Document> docList=null;
+	private ModifyFile modification;
+    private ArrayList<Document> docList;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
