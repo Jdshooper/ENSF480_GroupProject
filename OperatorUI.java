@@ -17,8 +17,7 @@ public class OperatorUI extends javax.swing.JFrame {
     /**
      * Creates new form OperatorUI
      */
-    public OperatorUI(ArrayList<Document> dl) {
-    	docList=dl;
+    public OperatorUI() {
         initComponents();
         if(docList==null)
         {
@@ -32,6 +31,7 @@ public class OperatorUI extends javax.swing.JFrame {
         }
         UpdateDocList();
         modification=new ModifyFile();
+        docList=modification.getDocumentList();
     }
 
 
@@ -250,13 +250,16 @@ public class OperatorUI extends javax.swing.JFrame {
 		String [] FilepathPrice=block[2].split(" ");
 		FilepathPrice[0]=FilepathPrice[0].replaceAll("\\s", "");
 		FilepathPrice[1]=FilepathPrice[1].replaceAll("\\s", "");
+		FilepathPrice[2]=FilepathPrice[2].replaceAll("\\s", "");
 		
+		JOptionPane.showMessageDialog(null, "price is: "+FilepathPrice[2]);
 		String attribute=null;
 		int status=-999;
 		ArrayList<String> tempNULL=new ArrayList<String>();
 		tempNULL.add("NULL");
 		attribute=JOptionPane.showInputDialog("Which Attribute Would You Like To Modify?");
-		attribute=attribute.toLowerCase();
+		if(attribute!=null)
+			attribute=attribute.toLowerCase();
 		if(attribute.equals("Title")||attribute.equals("title"))
 		{
 			String newTitle=null;
@@ -264,7 +267,7 @@ public class OperatorUI extends javax.swing.JFrame {
 				newTitle=JOptionPane.showInputDialog("What is the new Title?");
 			
 			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+newTitle,-999,tempNULL,
-					FilepathPrice[0], Double.parseDouble(FilepathPrice[1]) ));
+					FilepathPrice[1], Double.parseDouble(FilepathPrice[2]) ));
 		}
 		else if(attribute.equals("isbn")||attribute.equals("filepath"))
 			JOptionPane.showMessageDialog(null, "Cannot change ISBN or filePath");
@@ -278,7 +281,7 @@ public class OperatorUI extends javax.swing.JFrame {
 				p=Double.parseDouble(price);
 			}
 			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+TitleISBN[0],-999,tempNULL,
-					FilepathPrice[0], Double.parseDouble(price) ));
+					FilepathPrice[1], Double.parseDouble(price) ));
 		}
 		//not modifying author.
 //		else if(attribute.equals("author"))
@@ -304,11 +307,11 @@ public class OperatorUI extends javax.swing.JFrame {
 			return;
 		}
 		
-		if(result==-1)
+		if(status==-1)
     		JOptionPane.showMessageDialog(null, "An exception has occurred.");
-    	if(result==0)
+    	if(status==0)
     		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
-    	if(result==1)
+    	if(status==1)
     		JOptionPane.showMessageDialog(null, "Success.");
 		
     	UpdateDocList();
@@ -363,7 +366,7 @@ public class OperatorUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OperatorUI(documentsList).setVisible(true);
+                new OperatorUI().setVisible(true);
             }
         });
     }

@@ -65,7 +65,7 @@ public class SoftwareDocumentDBBroker {
 		{
 			if(Integer.parseInt(ISBNTitle[0])==database.getDoc_In_DB().get(i).getISBN())
 			{
-				database.getDoc_In_DB().get(i).setName(docModified.getName());
+				database.getDoc_In_DB().get(i).setName(ISBNTitle[1]);
 				database.getDoc_In_DB().get(i).setPrice(docModified.getPrice());
 				return true;
 			}

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * 
  */
@@ -57,5 +59,8 @@ public class ModifyFile {
 		//HOWEVER, NO DATABASE IMPLEMENTED, SO THIS ONLY DEALS WITH OBJECTS.
 		return true;
 	}
-	
+	public ArrayList<Document> getDocumentList()
+	{
+		return broker.getDocumentList();
+	}
 }
