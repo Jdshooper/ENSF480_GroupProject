@@ -11,11 +11,7 @@ import java.util.ArrayList;
  * @author jesse
  */
 public class OperatorUI extends javax.swing.JFrame {
-	
-	
-    private ModifyFile modification;
-    private ArrayList<Document> docList=null;
-    
+
     /**
      * Creates new form OperatorUI
      */
@@ -35,7 +31,7 @@ public class OperatorUI extends javax.swing.JFrame {
     }
 
 
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +136,8 @@ public class OperatorUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+		private ModifyFile modification;
+    private ArrayList<Document> docList=null;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
