@@ -252,7 +252,7 @@ public class OperatorUI extends javax.swing.JFrame {
 		FilepathPrice[1]=FilepathPrice[1].replaceAll("\\s", "");
 		FilepathPrice[2]=FilepathPrice[2].replaceAll("\\s", "");
 		
-		JOptionPane.showMessageDialog(null, "price is: "+FilepathPrice[2]);
+		
 		String attribute=null;
 		int status=-999;
 		ArrayList<String> tempNULL=new ArrayList<String>();
