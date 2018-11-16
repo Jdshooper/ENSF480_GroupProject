@@ -8,7 +8,7 @@
  *
  * @author jesse
  */
-public class BuyerGUI extends javax.swing.JFrame {
+public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
     /**
      * Creates new form BuyerGUI
@@ -207,14 +207,30 @@ public class BuyerGUI extends javax.swing.JFrame {
 
         jButton1.setText("Shopping Cart");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+              java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
+              card.show(jPanel1, "ShoppingCartCard");
             }
         });
 
         jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+              java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
+              card.show(jPanel1, "SearchCard");
+            }
+        });
 
         jButton3.setText("Promotions");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+              java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
+              card.show(jPanel1, "PromotionsCard");
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -282,6 +298,20 @@ public class BuyerGUI extends javax.swing.JFrame {
                 new BuyerGUI().setVisible(true);
             }
         });
+    }
+
+    /**
+     * A method to reveal the GUI
+     */
+    public void displayGUI(){
+      jPanel1.setVisible(true);
+    }
+
+    /**
+     * A method to hide the GUI
+     */
+    public void hideGUI(){
+      jPanel1.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
