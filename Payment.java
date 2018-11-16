@@ -6,7 +6,7 @@ public class Payment {
 	public Payment(int id, int cardNum, String expiryDate, int verificationNo) {
 		this.id=id;
 		this.cardDetails=new CardDetails(cardNum, expiryDate, verificationNo);
-		cart=getCart();
+		cart=Cart.getCart();
 	}
 	/**
 	 * @return the id
