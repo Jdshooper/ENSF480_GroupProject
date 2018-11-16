@@ -5,6 +5,7 @@
  */
  import java.awt.event.*;
  import javax.swing.*;
+ import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +18,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      */
     public BuyerGUI(int userID) {
         initComponents();
-        this.userID=userID;
+        this.buyerID=userID;
     }
 
     /**
@@ -31,6 +32,8 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
         buyerListener = new BuyerGUIListener(this);
         cart = Cart.getCart();
+        cart.setPromotions(new ArrayList<Promotion>());
+        cart.setBooks(new ArrayList<Document>());
 
         regControl=new RegistrationController();
         invControl=new InventoryController();
@@ -227,6 +230,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
               java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
               card.show(jPanel1, "ShoppingCartCard");
+              buyerListener.updateCart();
             }
         });
 
@@ -270,13 +274,15 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+        // Uncomment what is below later when Reg is made
+        /*
         if(regControl.getRegistration(buyerID)==1)
         	jTextPane1.replaceSelection("Registered");
         else if(regControl.getRegistration(buyerID)==0)
         	jTextPane1.replaceSelection("Not Registered");
         else if(regControl.getRegistration(buyerID)==-1)
         	jTextPane1.replaceSelection("Database error");
-        pack();
+        pack();*/
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -309,7 +315,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BuyerGUI().setVisible(true);
+                new BuyerGUI(1).setVisible(true);
             }
         });
     }
@@ -443,15 +449,22 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      */
     private void switchStatus(){
     	if(regControl.changeRegistration(buyerGui.buyerID)) {
-    		jTextPane1.replaceSelection(arg0);
+    	//	jTextPane1.replaceSelection(arg0);
     	}
     }
 
     public void updateCart(){
       buyerGui.jListModel1.removeAllElements();
-      if(buyerGui.cart == null){
-        subListModel.addElement("Your Shopping Cart is Empty!");
-      } else if( buyerGui.cart. )
+      if(buyerGui.cart.getBooks() == null || buyerGui.cart.getPromotions() == null){
+        jListModel1.addElement("Your Shopping Cart is Empty!");
+      } else{
+        jListModel1.addElement("Books:");
+        for(int i = 0; i<buyerGui.cart.getBooks().size(); i++)
+          jListModel1.addElement(buyerGui.cart.getBooks().get(i).toString());
+        jListModel1.addElement("Promotions:");
+        for(int i = 0; i<buyerGui.cart.getBooks().size(); i++)
+          jListModel1.addElement(buyerGui.cart.getPromotions().get(i).toString());
+      }
 
 
     }
