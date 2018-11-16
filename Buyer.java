@@ -4,7 +4,7 @@ public class Buyer extends User{
 	private Boolean registered;
 	public Buyer(int userID, String username, String password, char type) {
 		super(userID, username, password, type);
-		shoppingCart=getCart();
+		shoppingCart=Cart.getCart();
 		registered=false;
 	}
 	public Boolean getRegistered() {
