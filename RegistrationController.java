@@ -10,6 +10,16 @@ public class RegistrationController {
 			e.printStackTrace();
 		}
 	}
+	public int getRegistration(int buyerID) {
+		int reg;
+		try {
+			reg=dbBroker.getRegistration(buyerID);
+		}catch(NoDatabaseConnectionException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return reg;
+	}
 	public boolean changeRegistration(int buyerID) {
 		try {
 			dbBroker.changeRegistration(buyerID);

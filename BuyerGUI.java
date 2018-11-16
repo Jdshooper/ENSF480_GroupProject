@@ -15,8 +15,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     /**
      * Creates new form BuyerGUI
      */
-    public BuyerGUI() {
+    public BuyerGUI(int userID) {
         initComponents();
+        this.userID=userID;
     }
 
     /**
@@ -29,7 +30,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     private void initComponents() {
 
         buyerListener = new BuyerGUIListener(this);
-        cart = getCart();
+        cart = Cart.getCart();
 
         regControl=new RegistrationController();
         invControl=new InventoryController();
@@ -269,7 +270,12 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
+        if(regControl.getRegistration(buyerID)==1)
+        	jTextPane1.replaceSelection("Registered");
+        else if(regControl.getRegistration(buyerID)==0)
+        	jTextPane1.replaceSelection("Not Registered");
+        else if(regControl.getRegistration(buyerID)==-1)
+        	jTextPane1.replaceSelection("Database error");
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -327,6 +333,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public Cart cart;
     public RegistrationController regControl;
     public InventoryController invControl;
+    public int buyerID;
 
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -435,7 +442,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      *
      */
     private void switchStatus(){
-
+    	if(regControl.changeRegistration(buyerGui.buyerID)) {
+    		jTextPane1.replaceSelection(arg0);
+    	}
     }
 
     public void updateCart(){

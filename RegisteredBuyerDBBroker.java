@@ -27,6 +27,17 @@ public class RegisteredBuyerDBBroker {
 		}
 		return -1;
 	}
+	public int getRegistration(int buyerID) throws NoDatabaseConnectionException{
+		if(connection==false) {
+			throw new NoDatabaseConnectionException("In getRegistration function");
+		}
+		ArrayList<Buyer> buyers=database.getBuyerList();
+		int buyerIndex=findBuyer(buyerID);
+		if(buyers.get(buyerIndex).getRegistered())
+			return 1;
+		else
+			return 0;
+	}
 	public boolean changeRegistration(int buyerID) throws NoDatabaseConnectionException{
 		if(connection==false) {
 			throw new NoDatabaseConnectionException("In changeRegistration function");
