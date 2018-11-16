@@ -1,12 +1,13 @@
 import java.util.*;
 
 public class Promotion {
+	private static int promoID=0;
 	private int id;
 	private String name;
 	private Date validUntil;
 	private int discount;
-	public Promotion(int id, String name, Date validUntil, int discount) {
-		this.id=id;
+	public Promotion(String name, Date validUntil, int discount) {
+		this.id=promoID++;
 		this.name=name;
 		this.validUntil=validUntil;
 		this.discount=discount;

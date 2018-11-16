@@ -8,7 +8,7 @@ public class InventoryDB {
 	
 	private static InventoryDB instance=null;
 	private InventoryDB() {}
-	private ArrayList<Document> inventoryList;
+	private ArrayList<DocStock> inventoryList;
 	public static InventoryDB getInventoryDB()
 	{
 		if(instance==null)
@@ -29,14 +29,14 @@ public class InventoryDB {
 	/**
 	 * @return the inventoryList
 	 */
-	public ArrayList<Document> getInventoryList() {
+	public ArrayList<DocStock> getInventoryList() {
 		return inventoryList;
 	}
 
 	/**
 	 * @param inventoryList the inventoryList to set
 	 */
-	public void setInventoryList(ArrayList<Document> inventoryList) {
+	public void setInventoryList(ArrayList<DocStock> inventoryList) {
 		this.inventoryList = inventoryList;
 	}
 	

@@ -56,4 +56,14 @@ public class RegisteredBuyerDBBroker {
 		}
 		return 0;
 	}
+	public int createPromotion(String name, Date validUntil, int discount) throws NoDatabaseConnectionException{
+		if(connection==false) {
+			throw new NoDatabaseConnectionException("in createPromotion function");
+		}
+		Promotion promotion=new Promotion(name, validUntil, discount);
+		ArrayList<Promotion> promotions=database.getPromotionList();
+		promotions.add(promotion);
+		database.setPromotionList(promotions);
+		return 1;
+	}
 }
