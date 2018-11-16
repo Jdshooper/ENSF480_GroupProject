@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+ import java.awt.event.*;
+ import javax.swing.*;
 
 /**
  *
@@ -26,6 +28,8 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buyerListener = new BuyerGUIListener(this);
+
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -33,25 +37,32 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         jListModel1 = new javax.swing.DefaultListModel<String>();
         jList1 = new javax.swing.JList<String>(jListModel1);
         jButton4 = new javax.swing.JButton();
+        jButton4.addActionListener(buyerListener);
         jButton5 = new javax.swing.JButton();
+        jButton5.addActionListener(buyerListener);
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListModel2 = new javax.swing.DefaultListModel<String>();
         jList2 = new javax.swing.JList<String>(jListModel2);
         jButton6 = new javax.swing.JButton();
+        jButton6.addActionListener(buyerListener);
         jButton7 = new javax.swing.JButton();
+        jButton7.addActionListener(buyerListener);
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListModel3 = new javax.swing.DefaultListModel<String>();
         jList3 = new javax.swing.JList<String>(jListModel3);
         jButton8 = new javax.swing.JButton();
+        jButton8.addActionListener(buyerListener);
         jButton9 = new javax.swing.JButton();
+        jButton9.addActionListener(buyerListener);
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jButton10 = new javax.swing.JButton();
+        jButton10.addActionListener(buyerListener);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -258,13 +269,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
-        card.show(jPanel1, "ShoppingCartCard");
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -315,34 +319,118 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.DefaultListModel jListModel1;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.DefaultListModel jListModel2;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.DefaultListModel jListModel3;
-    private javax.swing.JList<String> jList3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextPane jTextPane1;
+    public BuyerGUIListener buyerListener;
+
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton10;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton4;
+    public javax.swing.JButton jButton5;
+    public javax.swing.JButton jButton6;
+    public javax.swing.JButton jButton7;
+    public javax.swing.JButton jButton8;
+    public javax.swing.JButton jButton9;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    public javax.swing.DefaultListModel jListModel1;
+    public javax.swing.JList<String> jList1;
+    public javax.swing.DefaultListModel jListModel2;
+    public javax.swing.JList<String> jList2;
+    public javax.swing.DefaultListModel jListModel3;
+    public javax.swing.JList<String> jList3;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JScrollPane jScrollPane3;
+    public javax.swing.JScrollPane jScrollPane4;
+    public javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
+
+
+    public class BuyerGUIListener implements ActionListener {
+        BuyerGUI buyerGui;
+
+
+    public BuyerGUIListener(BuyerGUI buyer){
+        buyerGui = buyer;
+    }
+
+
+    public void actionPerformed(ActionEvent e) {
+        // Shopping List:
+        if(e.getSource() == jButton4) // Remove
+            removeShoppingItem();
+        if(e.getSource() == jButton5) // Place Order
+            placeOrder();
+        // Search:
+        if(e.getSource() == jButton6) // Add cart
+            addToCart();
+        if(e.getSource() == jButton7) // Search
+            search();
+        // Promotions:
+        if(e.getSource() == jButton8) // Add
+            addPromotions();
+        if(e.getSource() == jButton9) // Refresh
+            refreshPromotions();
+        if(e.getSource() == jButton10) // Switch Status
+            switchStatus();
+    }
+
+    /**
+     *
+     */
+    private void removeShoppingItem(){
+      
+    }
+
+    /**
+     *
+     */
+    private void placeOrder(){
+
+    }
+
+    /**
+     *
+     */
+    private void addToCart(){
+
+    }
+
+    /**
+     *
+     */
+    private void search(){
+
+    }
+
+    /**
+     *
+     */
+    private void addPromotions(){
+
+    }
+
+    /**
+     *
+     */
+    private void refreshPromotions(){
+
+    }
+
+    /**
+     *
+     */
+    private void switchStatus(){
+
+    }
+
+
+  } // end of buyer listener
 }
