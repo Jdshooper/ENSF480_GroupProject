@@ -12,6 +12,10 @@ public class Promotion {
 		this.validUntil=validUntil;
 		this.discount=discount;
 	}
+
+	public String toString(){
+		return "" + id + " " + name + " " + validUntil + " $" + discount;
+	}
 	/**
 	 * @return the id
 	 */
@@ -54,5 +58,5 @@ public class Promotion {
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
-	
+
 }
