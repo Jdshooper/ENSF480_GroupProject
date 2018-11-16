@@ -29,7 +29,10 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     private void initComponents() {
 
         buyerListener = new BuyerGUIListener(this);
-
+        
+        regControl=new RegistrationController();
+        invControl=new InventoryController();
+        
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -319,8 +322,10 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public RegistrationController regControl;
+    public InventoryController invControl;
     public BuyerGUIListener buyerListener;
-
+    
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
     public javax.swing.JButton jButton2;
@@ -374,7 +379,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         if(e.getSource() == jButton7) // Search
             search();
         // Promotions:
-        if(e.getSource() == jButton8) // Add
+        if(e.getSource() == jButton8) // Add to cart
             addPromotions();
         if(e.getSource() == jButton9) // Refresh
             refreshPromotions();
@@ -428,7 +433,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      *
      */
     private void switchStatus(){
-
+    	
     }
 
 
