@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,14 +11,31 @@
  * @author jesse
  */
 public class OperatorUI extends javax.swing.JFrame {
-
+	
+	
+    private ModifyFile modification;
+    private ArrayList<Document> docList=null;
+    
     /**
      * Creates new form OperatorUI
      */
     public OperatorUI() {
         initComponents();
+        if(docList==null)
+        {
+        	//fake some documents
+        	docList=new ArrayList<Document>();
+        	ArrayList<String> authorlist=new ArrayList<String>();
+        	authorlist.add("author1");
+        	docList.add(new Document("Document 1", -1, authorlist, "thePath1", 19.99));
+        	docList.add(new Document("Document 2", -1, authorlist, "thePath2", 29.99));
+        	docList.add(new Document("Document 3", -1, authorlist, "thePath3", 39.99));
+        }
+        modification=new ModifyFile();
     }
 
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

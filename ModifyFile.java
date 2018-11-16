@@ -56,4 +56,9 @@ public class ModifyFile {
 		//THIS SHOULD CREATE THE FILE THAT THE USER SELECTED FROM THEIR COMPUTER IN BOUNDARY
 		return false;
 	}
+	
+	public void setDoc(Document x)
+	{
+		theDoc=x;
+	}
 }

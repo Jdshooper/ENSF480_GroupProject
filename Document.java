@@ -28,6 +28,18 @@ public class Document {
 		//In this implementation style and format are not used.
 	}
 	
+	public String toString()
+	{
+		//assumes working document, it should have all these.
+		String ultimateString=name;
+		ultimateString+=ISBN;
+		for(int i=0; i<authors.size(); i++)
+			ultimateString+=authors.get(i);
+		ultimateString+=filePath;
+		ultimateString+=price;
+		return ultimateString;
+	}
+	
 	public boolean removeAuthor(int index)
 	{
 		if(index<0||index>authors.size()) //so no exception is thrown.
