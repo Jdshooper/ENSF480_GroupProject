@@ -18,22 +18,12 @@ public class OperatorUI extends javax.swing.JFrame {
      * Creates new form OperatorUI
      */
     public OperatorUI() {
-        initComponents();
-        if(docList==null)
-        {
-        	//fake some documents
-        	docList=new ArrayList<Document>();
-        	ArrayList<String> authorlist=new ArrayList<String>();
-        	authorlist.add("author1");
-        	docList.add(new Document("Document 1", -1, authorlist, "thePath1", 19.99));
-        	docList.add(new Document("Document 2", -1, authorlist, "thePath2", 29.99));
-        	docList.add(new Document("Document 3", -1, authorlist, "thePath3", 39.99));
 
-          setup=new DatabaseSetup(docList);
-        }
+
         UpdateDocList();
         modification=new ModifyFile();
         docList=modification.getDocumentList();
+        initComponents();
     }
 
 
@@ -375,7 +365,6 @@ public class OperatorUI extends javax.swing.JFrame {
     // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private DatabaseSetup setup;
 	  private ModifyFile modification;
     private ArrayList<Document> docList;
     private javax.swing.JButton jButton1;

@@ -140,6 +140,17 @@ public class LoginUI extends javax.swing.JFrame {
     			{
     				if(users.get(i).getType()=='o'){
               this.setVisible(false);
+
+                ArrayList<Document>documentsList=new ArrayList<Document>();
+              	ArrayList<String> authorlist=new ArrayList<String>();
+              	authorlist.add("author1");
+              	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
+              	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
+              	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
+
+                DatabaseSetup setup=new DatabaseSetup(documentsList);
+
+
               java.awt.EventQueue.invokeLater(new Runnable() {
                   public void run() {
                       new OperatorUI().setVisible(true);

@@ -423,6 +423,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     /**
+     * TODO Finish this method
      * a method that asks for credit card info and then places the order
      */
     private void placeOrder(){
@@ -467,7 +468,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * a method that displays the buyer's current status (reg or unreg)
      */
     private void displayStatus(){
-
+      //if(buyer )
     }
 
     /**
