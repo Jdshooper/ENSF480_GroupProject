@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class DatabaseSetup {
 
 	SoftwareDocumentDB softwaredoc;
+	InventoryDB	invdocStock;
 	//note, needs to be a db variable here for every database.
 	public DatabaseSetup() {
 		softwaredoc=SoftwareDocumentDB.getSoftwareDocumentDB();
