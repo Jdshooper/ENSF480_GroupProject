@@ -1,5 +1,5 @@
 
-public class User {
+public abstract class User {
 	private int userID;
 	private Credential credentials;
 	private char type;
@@ -38,5 +38,5 @@ public class User {
 	public void setType(char type) {
 		this.type = type;
 	}
-	
+
 }

@@ -16,9 +16,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     /**
      * Creates new form BuyerGUI
      */
-    public BuyerGUI(int userID) {
+    public BuyerGUI(Buyer user) {
         initComponents();
-        this.buyerID=userID;
+        this.buyer=user;
     }
 
     /**
@@ -340,7 +340,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public Cart cart;
     public RegistrationController regControl;
     public InventoryController invControl;
-    public int buyerID;
+    public Buyer buyer;
 
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -449,7 +449,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      *
      */
     private void switchStatus(){
-    	if(regControl.changeRegistration(buyerGui.buyerID)) {
+    	if(regControl.changeRegistration(buyerGui.buyer.getUserID())) {
     	//	jTextPane1.replaceSelection(arg0);
     	}
     }

@@ -126,9 +126,10 @@ public class LoginUI extends javax.swing.JFrame {
     	{
     		//JOptionPane.showMessageDialog(null, "No UserDB or passing constructor a list, so faking the creation of a list of users.");
     		users=new ArrayList<User>();
-    		users.add(new User(-1, "u1", "p1", 'o'));//o for operator, -1 for id (not supposed
+        // Operator(int userID, String username, String password, char type, int staffID, String staffName)
+    		users.add(new Operator(-1, "u1", "p1", 'o',1,"Steve"));//o for operator, -1 for id (not supposed
     												//to be created), u is username, p is password.
-    		users.add(new User(-1, "u2", "p2", 'b'));//a for buyer, -1 for artificial created
+    		users.add(new Buyer(-1, "u2", "p2", 'b'));//a for buyer, -1 for artificial created
     	}
     	for(int i=0; i<users.size(); i++)
     	{
@@ -148,10 +149,10 @@ public class LoginUI extends javax.swing.JFrame {
     				if(users.get(i).getType()=='b')
     				{
               this.setVisible(false);
-              int user_id = users.get(i).getUserID();
+              Buyer user = (Buyer) users.get(i);
               java.awt.EventQueue.invokeLater(new Runnable() {
                   public void run() {
-                      new BuyerGUI(user_id).setVisible(true);
+                      new BuyerGUI(user).setVisible(true);
                   }
               });
     				}
