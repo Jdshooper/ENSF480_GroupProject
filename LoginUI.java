@@ -140,17 +140,7 @@ public class LoginUI extends javax.swing.JFrame {
     			{
     				if(users.get(i).getType()=='o'){
               this.setVisible(false);
-
-                ArrayList<Document>documentsList=new ArrayList<Document>();
-              	ArrayList<String> authorlist=new ArrayList<String>();
-              	authorlist.add("author1");
-              	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
-              	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
-              	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
-
-                DatabaseSetup setup=new DatabaseSetup(documentsList);
-
-
+              
               java.awt.EventQueue.invokeLater(new Runnable() {
                   public void run() {
                       new OperatorUI().setVisible(true);
@@ -184,6 +174,17 @@ public class LoginUI extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+    	  ArrayList<Document>documentsList=new ArrayList<Document>();
+        	ArrayList<String> authorlist=new ArrayList<String>();
+        	authorlist.add("author1");
+        	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
+        	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
+        	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
+
+          DatabaseSetup setup=new DatabaseSetup();
+          setup.setupSoftwareDocumentDB(documentsList);
+          
+          
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

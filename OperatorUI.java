@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author jesse
+ * @author Jiexuan Li
  */
 public class OperatorUI extends javax.swing.JFrame {
 
@@ -18,12 +18,10 @@ public class OperatorUI extends javax.swing.JFrame {
      * Creates new form OperatorUI
      */
     public OperatorUI() {
-
-
-        UpdateDocList();
         modification=new ModifyFile();
         docList=modification.getDocumentList();
         initComponents();
+        UpdateDocList();
     }
 
 
