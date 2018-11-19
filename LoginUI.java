@@ -22,7 +22,7 @@ public class LoginUI extends javax.swing.JFrame {
     }
 
     private ArrayList<User> users=null;
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,11 +41,11 @@ public class LoginUI extends javax.swing.JFrame {
 
         //Supposed to be initialized outside of this, and then reference to the gui
         //by having it in the constructor. ie, public LoginUI(ArrayList<User> userDBList){users=userDBList;}
-        
-        
-        
-        
-        
+
+
+
+
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Username:");
@@ -59,7 +59,7 @@ public class LoginUI extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	LoginPressed(evt);
-            
+
             }
         });
 
@@ -140,18 +140,32 @@ public class LoginUI extends javax.swing.JFrame {
     				//somehow close the window.
     				this.setVisible(false);
     				JOptionPane.showMessageDialog(null, "THIS IS WHERE YOU OPEN ANOTHER GUI :D");
-    				if(users.get(i).getType()=='o')
-    					JOptionPane.showMessageDialog(null, "This is where u launch operator ui");
+    				if(users.get(i).getType()=='o'){
+              JOptionPane.showMessageDialog(null, "This is where u launch operator ui");
+              this.setVisible(false);
+              java.awt.EventQueue.invokeLater(new Runnable() {
+                  public void run() {
+                      new LoginUI().setVisible(true);
+                  }
+              });
+            }
     				if(users.get(i).getType()=='b')
     				{
     					JOptionPane.showMessageDialog(null, "This is where u launch promotions");
     					JOptionPane.showMessageDialog(null, "This is where u launch buyer UI");
+              this.setVisible(false);
+              int user_id = users.get(i).getUserID();
+              java.awt.EventQueue.invokeLater(new Runnable() {
+                  public void run() {
+                      new BuyerGUI(user_id).setVisible(true);
+                  }
+              });
     				}
-    				this.dispose();
+    				//this.dispose();
     				return;
     			}
     	}
-    	
+
     	JOptionPane.showMessageDialog(null, "Login Credentials Not Accepted, Try Again.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -162,7 +176,7 @@ public class LoginUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
