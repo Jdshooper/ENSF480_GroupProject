@@ -36,7 +36,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         cart.setPromotions(new ArrayList<Promotion>());
         cart.setBooks(new ArrayList<Document>());
 
-        searchResults = new ArrayList<Document>();
+        searchResults = new ArrayList<DocStock>();
 
         regControl=new RegistrationController();
         invControl=new InventoryController();
@@ -340,13 +340,29 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
       jPanel1.setVisible(false);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+    * This gets the search results
+    */
+    public ArrayList<DocStock> getSearchResults() {
+		return searchResults;
+	}
+    
+    /**
+     * 
+     * @param searchResults is updated in a listener.
+     */
+	public void setSearchResults(ArrayList<DocStock> searchResults) {
+		this.searchResults = searchResults;
+	}
+
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
     public BuyerGUIListener buyerListener;
     public Cart cart;
     public RegistrationController regControl;
     public InventoryController invControl;
     public Buyer buyer;
-    public ArrayList<Document> searchResults;
+    public ArrayList<DocStock> searchResults;
 
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -448,11 +464,11 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
       try{
         int index = jList2.getSelectedIndex();
         if(index == -1) return;
-        buyerGui.cart.getBooks().add(buyerGui.searchResults.get(i));
+        buyerGui.cart.getBooks().add(buyerGui.searchResults.get(index));
         updateCart();
         JOptionPane.showMessageDialog(null, "Added item to cart.");
       }
-      catch(exception e){
+      catch(Exception e){
         JOptionPane.showMessageDialog(null, "Error: order not made.");
       }
 
@@ -473,8 +489,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 		{
 			docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
 		}
+		buyerGui.setSearchResults(new ArrayList<DocStock> ());
+		buyerGui.invControl.searchDocuments(docTitle, buyerGui.getSearchResults());
 		
-		buyerGui.invControl.searchDocuments(docTitle, buyerGui.)
     }
 
     /**
