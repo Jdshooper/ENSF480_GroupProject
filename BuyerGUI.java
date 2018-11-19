@@ -36,6 +36,8 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         cart.setPromotions(new ArrayList<Promotion>());
         cart.setBooks(new ArrayList<Document>());
 
+        searchResults = new ArrayList<Document>();
+
         regControl=new RegistrationController();
         invControl=new InventoryController();
 
@@ -175,6 +177,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
         jLabel4.setText("Status:");
 
+        jTextPane1.setEditable(false);
         jScrollPane4.setViewportView(jTextPane1);
 
         jButton10.setText("Switch Status");
@@ -250,6 +253,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
               java.awt.CardLayout card = (java.awt.CardLayout)jPanel1.getLayout();
               card.show(jPanel1, "PromotionsCard");
+              buyerListener.displayStatus();
             }
         });
 
@@ -342,6 +346,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public RegistrationController regControl;
     public InventoryController invControl;
     public Buyer buyer;
+    public ArrayList<Document> searchResults;
 
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -440,6 +445,16 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * a method that adds a searched book to the cart
      */
     private void addToCart(){
+      try{
+        int index = jList2.getSelectedIndex();
+        if(index == -1) return;
+        buyerGui.cart.getBooks().add(buyerGui.searchResults.get(i));
+        updateCart();
+        JOptionPane.showMessageDialog(null, "Added item to cart.");
+      }
+      catch(exception e){
+        JOptionPane.showMessageDialog(null, "Error: order not made.");
+      }
 
     }
 
@@ -468,7 +483,13 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * a method that displays the buyer's current status (reg or unreg)
      */
     private void displayStatus(){
-      //if(buyer )
+      if(buyerGui.buyer.getRegistered()){
+        buyerGui.jTextPane1.setText("Registered");
+        System.out.println(jTextPane1.getText());
+      }
+      else{
+        buyerGui.jTextPane1.setText("Unregistered");
+      }
     }
 
     /**
@@ -497,8 +518,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         for(int i = 0; i<buyerGui.cart.getPromotions().size(); i++)
           jListModel1.addElement(buyerGui.cart.getPromotions().get(i).toString());
       }
-
-
     }
 
 
