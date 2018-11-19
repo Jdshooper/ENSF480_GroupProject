@@ -463,6 +463,18 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      */
     private void search(){
 
+    	int confirm=JOptionPane.showConfirmDialog(null, "Would you like to start a new search?");
+		if(confirm==JOptionPane.NO_OPTION) {
+	    	return;
+		}
+		String docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
+		
+		while(docTitle==null)
+		{
+			docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
+		}
+		
+		buyerGui.invControl.searchDocuments(docTitle, buyerGui.)
     }
 
     /**
