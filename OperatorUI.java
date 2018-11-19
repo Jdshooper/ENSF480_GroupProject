@@ -279,7 +279,7 @@ public class OperatorUI extends javax.swing.JFrame {
 			double p=-1;
 			while(price==null||p<0)
 			{
-				price=JOptionPane.showInputDialog("What is the new price? Also needs to be positive");
+				price=JOptionPane.showInputDialog("What is the new price? (It must be a positive number)");
 				p=Double.parseDouble(price);
 			}
 			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+TitleISBN[0],-999,tempNULL,
