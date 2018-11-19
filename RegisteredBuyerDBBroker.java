@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class RegisteredBuyerDBBroker {
-	
+
 	private RegisteredBuyerDB database;
 	private boolean connection;
 	public RegisteredBuyerDBBroker() throws NoDatabaseConnectionException{

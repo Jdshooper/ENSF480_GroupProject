@@ -124,7 +124,7 @@ public class LoginUI extends javax.swing.JFrame {
     	}
     	if(users==null)
     	{
-    		JOptionPane.showMessageDialog(null, "No UserDB or passing constructor a list, so faking the creation of a list of users.");
+    		//JOptionPane.showMessageDialog(null, "No UserDB or passing constructor a list, so faking the creation of a list of users.");
     		users=new ArrayList<User>();
     		users.add(new User(-1, "u1", "p1", 'o'));//o for operator, -1 for id (not supposed
     												//to be created), u is username, p is password.
@@ -137,22 +137,16 @@ public class LoginUI extends javax.swing.JFrame {
     		if(username.equals(users.get(i).getCredentials().getUsername()))
     			if(password.equals(users.get(i).getCredentials().getPassword()))
     			{
-    				//somehow close the window.
-    				this.setVisible(false);
-    				JOptionPane.showMessageDialog(null, "THIS IS WHERE YOU OPEN ANOTHER GUI :D");
     				if(users.get(i).getType()=='o'){
-              JOptionPane.showMessageDialog(null, "This is where u launch operator ui");
               this.setVisible(false);
               java.awt.EventQueue.invokeLater(new Runnable() {
                   public void run() {
-                      new LoginUI().setVisible(true);
+                      new OperatorUI().setVisible(true);
                   }
               });
             }
     				if(users.get(i).getType()=='b')
     				{
-    					JOptionPane.showMessageDialog(null, "This is where u launch promotions");
-    					JOptionPane.showMessageDialog(null, "This is where u launch buyer UI");
               this.setVisible(false);
               int user_id = users.get(i).getUserID();
               java.awt.EventQueue.invokeLater(new Runnable() {

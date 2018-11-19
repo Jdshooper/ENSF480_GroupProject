@@ -28,6 +28,8 @@ public class OperatorUI extends javax.swing.JFrame {
         	docList.add(new Document("Document 1", -1, authorlist, "thePath1", 19.99));
         	docList.add(new Document("Document 2", -1, authorlist, "thePath2", 29.99));
         	docList.add(new Document("Document 3", -1, authorlist, "thePath3", 39.99));
+
+          setup=new DatabaseSetup(docList);
         }
         UpdateDocList();
         modification=new ModifyFile();
@@ -53,29 +55,29 @@ public class OperatorUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
- 
-        
+
+
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	AddPressed(evt);
-            
+
             }
         });
-        
+
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	RemovePressed(evt);
-            
+
             }
         });
-        
+
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
             	UpdatePressed(evt);
-            
+
             }
         });
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,11 +128,11 @@ public class OperatorUI extends javax.swing.JFrame {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void AddPressed(java.awt.event.ActionEvent evt) {
     	String Title=JOptionPane.showInputDialog("Please enter the Title of the Document");
     	if(Title==null)
@@ -151,7 +153,7 @@ public class OperatorUI extends javax.swing.JFrame {
     	{
     		authNum++;
     		authors.add(author);
-    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name:");
+    		author=JOptionPane.showInputDialog("Please enter author #"+authNum+"'s name: (or press cancel to stop adding authors)");
     	}
     	String filePath=JOptionPane.showInputDialog("Please enter filepath for this file");
     	while(filePath==null)
@@ -173,18 +175,18 @@ public class OperatorUI extends javax.swing.JFrame {
 		}
 		int result=-999;
 		if(confirm==JOptionPane.YES_OPTION) {
-			result=modification.modifyFile("Add", tempDoc);			
+			result=modification.modifyFile("Add", tempDoc);
 		}
-    	
+
     	if(result==-1)
     		JOptionPane.showMessageDialog(null, "An exception has occurred.");
     	if(result==0)
     		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
     	if(result==1)
     		JOptionPane.showMessageDialog(null, "Success.");
-    	
-    	
-    	
+
+
+
     	UpdateDocList();
     }
     private int getLargest()
@@ -194,7 +196,7 @@ public class OperatorUI extends javax.swing.JFrame {
     		id=docList.get(i).getISBN();
     	return id;
     }
-    
+
     private void RemovePressed(java.awt.event.ActionEvent evt) {
     	int index=jList1.getSelectedIndex();
 		if(index==-1)
@@ -206,11 +208,11 @@ public class OperatorUI extends javax.swing.JFrame {
 		String [] TitleISBN=block[0].split(" ");
 		String [] Authors=block[1].split(" ");
 		String [] FilepathPrice=block[2].split(" ");
-		
+
 		ArrayList<String> tempAuth=new ArrayList<String>();
 		tempAuth.add("tempval");
 		Document temp=new Document("tempval", Integer.parseInt(TitleISBN[1]), tempAuth, "tempval", 99.99);
-		
+
 		int confirm=JOptionPane.showConfirmDialog(null, "Document: " +Document+"\nAre you satisfied with this document?");
 		if(confirm==JOptionPane.NO_OPTION) {
 			JOptionPane.showMessageDialog(null, "Ok, no document is removed.");
@@ -218,20 +220,20 @@ public class OperatorUI extends javax.swing.JFrame {
 		}
 		int result=-999;
 		if(confirm==JOptionPane.YES_OPTION) {
-			result=modification.modifyFile("Remove", temp);			
+			result=modification.modifyFile("Remove", temp);
 		}
-		
+
 		if(result==-1)
     		JOptionPane.showMessageDialog(null, "An exception has occurred.");
     	if(result==0)
     		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
     	if(result==1)
     		JOptionPane.showMessageDialog(null, "Success.");
-    	
-		
+
+
     	UpdateDocList();
     }
-    
+
     private void UpdatePressed(java.awt.event.ActionEvent evt) {
     	int index=jList1.getSelectedIndex();
 		if(index==-1)
@@ -251,8 +253,8 @@ public class OperatorUI extends javax.swing.JFrame {
 		FilepathPrice[0]=FilepathPrice[0].replaceAll("\\s", "");
 		FilepathPrice[1]=FilepathPrice[1].replaceAll("\\s", "");
 		FilepathPrice[2]=FilepathPrice[2].replaceAll("\\s", "");
-		
-		
+
+
 		String attribute=null;
 		int status=-999;
 		ArrayList<String> tempNULL=new ArrayList<String>();
@@ -265,7 +267,7 @@ public class OperatorUI extends javax.swing.JFrame {
 			String newTitle=null;
 			while(newTitle==null)
 				newTitle=JOptionPane.showInputDialog("What is the new Title?");
-			
+
 			status=modification.modifyFile("Update", new Document(TitleISBN[1]+";;"+newTitle,-999,tempNULL,
 					FilepathPrice[1], Double.parseDouble(FilepathPrice[2]) ));
 		}
@@ -306,73 +308,75 @@ public class OperatorUI extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "Invalid attribute to modify. Try again.");
 			return;
 		}
-		
+
 		if(status==-1)
     		JOptionPane.showMessageDialog(null, "An exception has occurred.");
     	if(status==0)
     		JOptionPane.showMessageDialog(null, "An expected error has occurred.");
     	if(status==1)
     		JOptionPane.showMessageDialog(null, "Success.");
-		
+
     	UpdateDocList();
     }
-    
+
     private void UpdateDocList()
     {
     	jListModel1.clear();
     	for(int i=0; i<docList.size(); i++)
     		jListModel1.addElement(docList.get(i).toString());
     }
-    
-    
+
+
     /**
      * @param args the command line arguments
+     * commented out for actual (non-testing) use
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        ArrayList<Document>documentsList=new ArrayList<Document>();
-    	ArrayList<String> authorlist=new ArrayList<String>();
-    	authorlist.add("author1");
-    	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
-    	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
-    	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
-     
-        DatabaseSetup setup=new DatabaseSetup(documentsList);
-        
-        
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OperatorUI().setVisible(true);
-            }
-        });
-    }
+    // public static void main(String args[]) {
+    //     /* Set the Nimbus look and feel */
+    //     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    //     /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    //      * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+    //      */
+    //     try {
+    //         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+    //             if ("Nimbus".equals(info.getName())) {
+    //                 javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    //                 break;
+    //             }
+    //         }
+    //     } catch (ClassNotFoundException ex) {
+    //         java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (InstantiationException ex) {
+    //         java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (IllegalAccessException ex) {
+    //         java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    //         java.util.logging.Logger.getLogger(OperatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    //     }
+    //     //</editor-fold>
+    //
+    //     ArrayList<Document>documentsList=new ArrayList<Document>();
+    // 	ArrayList<String> authorlist=new ArrayList<String>();
+    // 	authorlist.add("author1");
+    // 	documentsList.add(new Document("Document 1", 1, authorlist, "thePath1", 19.99));
+    // 	documentsList.add(new Document("Document 2", 2, authorlist, "thePath2", 29.99));
+    // 	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
+    //
+    //     DatabaseSetup setup=new DatabaseSetup(documentsList);
+    //
+    //
+    //
+    //     /* Create and display the form */
+    //     java.awt.EventQueue.invokeLater(new Runnable() {
+    //         public void run() {
+    //             new OperatorUI().setVisible(true);
+    //         }
+    //     });
+    // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-	private ModifyFile modification;
+    private DatabaseSetup setup;
+	  private ModifyFile modification;
     private ArrayList<Document> docList;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
