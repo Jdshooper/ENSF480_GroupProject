@@ -19,6 +19,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public BuyerGUI(Buyer user) {
         initComponents();
         this.buyer=user;
+        buyerListener.updateCart();
     }
 
     /**
@@ -356,11 +357,11 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
-    public javax.swing.DefaultListModel jListModel1;
+    public javax.swing.DefaultListModel<String> jListModel1;
     public javax.swing.JList<String> jList1;
-    public javax.swing.DefaultListModel jListModel2;
+    public javax.swing.DefaultListModel<String> jListModel2;
     public javax.swing.JList<String> jList2;
-    public javax.swing.DefaultListModel jListModel3;
+    public javax.swing.DefaultListModel<String> jListModel3;
     public javax.swing.JList<String> jList3;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
@@ -407,28 +408,45 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * removes selected item from cart and list
      */
     private void removeShoppingItem(){
-
+      int index = jList1.getSelectedIndex();
+      if(index == -1) return;
+      String selection = jListModel1.get(index);
+      if(selection.equals("Books:") || selection.equals("Promotions:")) return;
+      int bookNum = buyerGui.cart.getBooks().size();
+      int promoNum = buyerGui.cart.getPromotions().size();
+      if(index > bookNum){ // if promo
+        buyerGui.cart.getPromotions().remove(index-(bookNum+1));
+      } else { // else book
+        buyerGui.cart.getBooks().remove(index-1);
+      }
+      updateCart();
     }
 
     /**
-     *
+     * a method that asks for credit card info and then places the order
      */
     private void placeOrder(){
+      int bookNum = buyerGui.cart.getBooks().size();
+      int promoNum = buyerGui.cart.getPromotions().size();
+      if(bookNum == 0){
+        JOptionPane.showMessageDialog(null, "Cannot place order, your cart is empty!");
+        return;
+      }
 
     }
 
     /**
-     *
+     * a method that adds a searched book to the cart
      */
     private void addToCart(){
 
     }
 
     /**
-     *
+     * a method to look for a book
      */
     private void search(){
-      
+
     }
 
     /**
@@ -439,21 +457,33 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     /**
-     *
+     * a method that gets the latest promotions if the user is registered
      */
     private void refreshPromotions(){
 
     }
 
     /**
-     *
+     * a method that displays the buyer's current status (reg or unreg)
+     */
+    private void displayStatus(){
+
+    }
+
+    /**
+     * a method to switch the buyer's current status (reg or unreg)
      */
     private void switchStatus(){
     	if(regControl.changeRegistration(buyerGui.buyer.getUserID())) {
     	//	jTextPane1.replaceSelection(arg0);
     	}
+
+      displayStatus(); // update the buyer's display
     }
 
+    /**
+     * A method that displays the current items in the cart
+     */
     public void updateCart(){
       buyerGui.jListModel1.removeAllElements();
       if(buyerGui.cart.getBooks() == null || buyerGui.cart.getPromotions() == null){
@@ -463,7 +493,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         for(int i = 0; i<buyerGui.cart.getBooks().size(); i++)
           jListModel1.addElement(buyerGui.cart.getBooks().get(i).toString());
         jListModel1.addElement("Promotions:");
-        for(int i = 0; i<buyerGui.cart.getBooks().size(); i++)
+        for(int i = 0; i<buyerGui.cart.getPromotions().size(); i++)
           jListModel1.addElement(buyerGui.cart.getPromotions().get(i).toString());
       }
 
