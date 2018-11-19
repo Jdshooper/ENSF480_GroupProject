@@ -438,7 +438,15 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         JOptionPane.showMessageDialog(null, "Cannot place order, your cart is empty!");
         return;
       }
+      try{
+        int cNum = JOptionPane.showInputDialog("What is your credit card number?");
+        String cMoYr = JOptionPane.showInputDialog("What is your credit card expiry date?");
+        int cCode = JOptionPane.showInputDialog("What is your credit card code?");
+        CardDetails cardD = new CardDetails(cNum, cMoYr, cCode);
 
+      } catch(exception e){
+        JOptionPane.showMessageDialog(null, "Your order was Canceled");
+      }
     }
 
     /**
@@ -468,12 +476,12 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 	    	return;
 		}
 		String docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
-		
+
 		while(docTitle==null)
 		{
 			docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
 		}
-		
+
 		buyerGui.invControl.searchDocuments(docTitle, buyerGui.)
     }
 
