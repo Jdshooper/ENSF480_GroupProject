@@ -6,6 +6,7 @@
  import java.awt.event.*;
  import javax.swing.*;
  import java.util.ArrayList;
+ import java.lang.Exception;
 
 /**
  *
@@ -455,12 +456,18 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         return;
       }
       try{
-        int cNum = JOptionPane.showInputDialog("What is your credit card number?");
+        String cNumS = JOptionPane.showInputDialog("What is your credit card number?");
+        int cNum = Integer.parseInt(cNumS);
         String cMoYr = JOptionPane.showInputDialog("What is your credit card expiry date?");
-        int cCode = JOptionPane.showInputDialog("What is your credit card code?");
+        String cCodeS = JOptionPane.showInputDialog("What is your credit card code?");
+        int cCode = Integer.parseInt(cCodeS);
         CardDetails cardD = new CardDetails(cNum, cMoYr, cCode);
 
-      } catch(exception e){
+        // Create payment
+
+        // update inventory
+
+      } catch(Exception e){
         JOptionPane.showMessageDialog(null, "Your order was Canceled");
       }
     }
@@ -472,14 +479,13 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
       try{
         int index = jList2.getSelectedIndex();
         if(index == -1) return;
-        buyerGui.cart.getBooks().add(buyerGui.searchResults.get(index));
+        buyerGui.cart.getBooks().add(buyerGui.searchResults.get(index).getDoc());
         updateCart();
         JOptionPane.showMessageDialog(null, "Added item to cart.");
       }
       catch(Exception e){
         JOptionPane.showMessageDialog(null, "Error: order not made.");
       }
-
     }
 
     /**
