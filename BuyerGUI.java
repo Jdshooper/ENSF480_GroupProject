@@ -355,7 +355,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 	public void setSearchResults(ArrayList<DocStock> searchResults) {
 		this.searchResults = searchResults;
 	}
-	
+
 	private void UpdateSearchResult()
     {
     	jListModel2.clear();
@@ -473,7 +473,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
         // Create payment
 
-        // update inventory
+        // Update inventory DB
+
+        // 
 
       } catch(Exception e){
         JOptionPane.showMessageDialog(null, "Your order was Canceled");
