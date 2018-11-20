@@ -13,6 +13,7 @@ public class DatabaseSetup {
 		buyerDB=RegisteredBuyerDB.getRegisteredBuyerDB();
 		setupInventoryDB();
 		setupSoftwareDocumentDB();
+		buyerDBSetup();
 	}
 	public void setupInventoryDB()
 	{
