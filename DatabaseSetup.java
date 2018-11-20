@@ -1,21 +1,20 @@
 import java.util.ArrayList;
+import java.util.*;
 
 public class DatabaseSetup {
 
 	SoftwareDocumentDB softwaredoc;
 	InventoryDB	invdocStock;
+	RegisteredBuyerDB buyerDB;
 	//note, needs to be a db variable here for every database.
 	public DatabaseSetup() {
 		softwaredoc=SoftwareDocumentDB.getSoftwareDocumentDB();
 		invdocStock=InventoryDB.getInventoryDB();
+		buyerDB=RegisteredBuyerDB.getRegisteredBuyerDB();
 		setupInventoryDB();
+		setupSoftwareDocumentDB();
+		buyerDBSetup();
 	}
-	
-	public void setupSoftwareDocumentDB(ArrayList<Document> docList)
-	{
-		softwaredoc.setDoc_In_DB(docList);
-	}
-	
 	public void setupInventoryDB()
 	{
 		ArrayList<Document>documentsList=new ArrayList<Document>();
@@ -41,5 +40,22 @@ public class DatabaseSetup {
      	documentsList.add(new Document("Document 3", 3, authorlist, "thePath3", 39.99));
      	softwaredoc.setDoc_In_DB(documentsList);
 	}
-
+	public void buyerDBSetup() {
+		//setting up RegisteredBuyerDB
+		ArrayList<Buyer> buyers=new ArrayList<Buyer>();
+		buyers.add(new Buyer(-1, "u2", "p2", 'b'));
+		buyerDB.setBuyerList(buyers);
+				
+		Calendar calendar=new GregorianCalendar(118,11,31);
+		Date date=calendar.getTime();
+		ArrayList<Promotion> promotions=new ArrayList<Promotion>();
+		promotions.add(new Promotion("promo1",date,10));
+		calendar=new GregorianCalendar(118,12,25);
+		date=calendar.getTime();
+		promotions.add(new Promotion("promo2",date,3));
+		calendar=new GregorianCalendar(119,1,18);
+		date=calendar.getTime();
+		promotions.add(new Promotion("promo3",date,5));
+	}
 }
+

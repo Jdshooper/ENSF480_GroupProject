@@ -355,7 +355,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 	public void setSearchResults(ArrayList<DocStock> searchResults) {
 		this.searchResults = searchResults;
 	}
-	
+
 	private void UpdateSearchResult()
     {
     	jListModel2.clear();
@@ -473,7 +473,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
         // Create payment
 
-        // update inventory
+        // Update inventory DB
+
+        // 
 
       } catch(Exception e){
         JOptionPane.showMessageDialog(null, "Your order was Canceled");
@@ -542,25 +544,26 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * a method that displays the buyer's current status (reg or unreg)
      */
     private void displayStatus(){
-      if(buyerGui.buyer.getRegistered()){
-        buyerGui.jTextPane1.setText("Registered");
-        System.out.println(jTextPane1.getText());
+        if(regControl.getRegistration(buyerGui.buyer.getUserID())==1){
+          buyerGui.jTextPane1.setText("Registered");
+          System.out.println(jTextPane1.getText());
+        }
+        else{
+          buyerGui.jTextPane1.setText("Unregistered");
+        }
       }
-      else{
-        buyerGui.jTextPane1.setText("Unregistered");
-      }
-    }
 
-    /**
-     * a method to switch the buyer's current status (reg or unreg)
-     */
+      /**
+       * a method to switch the buyer's current status (reg or unreg)
+       */
     private void switchStatus(){
     	if(regControl.changeRegistration(buyerGui.buyer.getUserID())) {
-    	//	jTextPane1.replaceSelection(arg0);
-    	}
-
-      displayStatus(); // update the buyer's display
-    }
+      		displayStatus();
+      	}
+      	else {
+      		buyerGui.jTextPane1.setText("Database Error");
+      	}
+      }
 
     /**
      * A method that displays the current items in the cart
