@@ -8,6 +8,7 @@ public class DatabaseSetup {
 	public DatabaseSetup() {
 		softwaredoc=SoftwareDocumentDB.getSoftwareDocumentDB();
 		invdocStock=InventoryDB.getInventoryDB();
+		setupInventoryDB();
 	}
 	
 	public void setupSoftwareDocumentDB(ArrayList<Document> docList)
@@ -28,6 +29,7 @@ public class DatabaseSetup {
      	docStockList.add(new DocStock(documentsList.get(0), 3));
      	docStockList.add(new DocStock(documentsList.get(1), 5));
      	docStockList.add(new DocStock(documentsList.get(2), 2));
+     	invdocStock.setInventoryList(docStockList);
 	}
 	public void setupSoftwareDocumentDB()
 	{
