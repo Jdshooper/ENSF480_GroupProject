@@ -355,6 +355,14 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 	public void setSearchResults(ArrayList<DocStock> searchResults) {
 		this.searchResults = searchResults;
 	}
+	
+	private void UpdateSearchResult()
+    {
+    	jListModel2.clear();
+    	for(int i=0; i<searchResults.size(); i++)
+    		jListModel2.addElement(searchResults.get(i).getDoc().toString());
+    }
+
 
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
@@ -503,9 +511,12 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 		{
 			docTitle=JOptionPane.showInputDialog("Please enter the name of the document to search for.");
 		}
-		buyerGui.setSearchResults(new ArrayList<DocStock> ());
+		JOptionPane.showMessageDialog(null, "you typed: " +docTitle);
+		buyerGui.setSearchResults(new ArrayList<DocStock> ());//clear the thing
 		buyerGui.invControl.searchDocuments(docTitle, buyerGui.getSearchResults());
+		JOptionPane.showMessageDialog(null, buyerGui.getSearchResults().get(0).getDoc().toString());
 
+		buyerGui.UpdateSearchResult();
     }
 
     /**
