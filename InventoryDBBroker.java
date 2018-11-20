@@ -22,7 +22,7 @@ public class InventoryDBBroker {
 		}
 		ArrayList<DocStock> allDocs=database.getInventoryList();
 		for(int i=0; i<allDocs.size(); i++) {
-			if(allDocs.get(i).getDoc().getName().contains(keyword)) {
+			if(allDocs.get(i).getDoc().getName().toUpperCase().contains(keyword.toUpperCase())) {
 				documents.add(allDocs.get(i));
 			}
 		}
