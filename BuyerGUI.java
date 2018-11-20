@@ -514,7 +514,12 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 		JOptionPane.showMessageDialog(null, "you typed: " +docTitle);
 		buyerGui.setSearchResults(new ArrayList<DocStock> ());//clear the thing
 		buyerGui.invControl.searchDocuments(docTitle, buyerGui.getSearchResults());
-		JOptionPane.showMessageDialog(null, buyerGui.getSearchResults().get(0).getDoc().toString());
+		if(buyerGui.getSearchResults().isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "you typed: " +docTitle+" but no results were found.");
+			return;
+		}
+		//JOptionPane.showMessageDialog(null, buyerGui.getSearchResults().get(0).getDoc().toString());
 
 		buyerGui.UpdateSearchResult();
     }
