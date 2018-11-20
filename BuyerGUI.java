@@ -532,7 +532,9 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * a method that gets the latest promotions if the user is registered
      */
     private void refreshPromotions(){
-
+    	if(regControl.getRegistration(buyerGui.buyer.getUserID())==1){
+    		
+    	}
     }
 
     /**
