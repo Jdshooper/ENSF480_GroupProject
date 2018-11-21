@@ -1,15 +1,20 @@
+import java.util.ArrayList;
 
 public class Payment {
 	private static int paymentID=0;
 	private int id;
 	private int userID;
-	private Cart cart;
+	// Details of the transaction:
+	private ArrayList<Document> books;
+	private ArrayList<Promotion> promotions;
 	private CardDetails cardDetails;
-	public Payment(int id, int cardNum, String expiryDate, int verificationNo) {
+
+	public Payment(int uid, ArrayList<Document> b, ArrayList<Promotion> p, int cardNum, String expiryDate, int verificationNo) {
 		id=paymentID++;
-		this.userID=id;
+		this.userID=uid;
 		this.cardDetails=new CardDetails(cardNum, expiryDate, verificationNo);
-		cart=Cart.getCart();
+		this.books = b;
+		this.promotions = p;
 	}
 	/**
 	 * @return the userID
@@ -23,5 +28,5 @@ public class Payment {
 	public int getId() {
 		return id;
 	}
-	
+
 }

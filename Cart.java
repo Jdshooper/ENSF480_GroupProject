@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * 
+ *
  */
 
 /**
@@ -44,4 +44,12 @@ public class Cart {
 	public void setPromotions(ArrayList<Promotion> promotions) {
 		this.promotions = promotions;
 	}
+
+	/**
+	 * clears the cart's items
+	 */
+	 public void clear(){
+		 promotions = new ArrayList<Promotion>();
+		 books = new ArrayList<Document>();
+	 }
 }

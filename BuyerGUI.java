@@ -468,7 +468,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     private void placeOrder(){
       int bookNum = buyerGui.cart.getBooks().size();
       int promoNum = buyerGui.cart.getPromotions().size();
-      if(bookNum == 0){
+      if(bookNum == 0){ // if no books to order, stop the order
         JOptionPane.showMessageDialog(null, "Cannot place order, your cart is empty!");
         return;
       }
@@ -478,16 +478,39 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         String cMoYr = JOptionPane.showInputDialog("What is your credit card expiry date?");
         String cCodeS = JOptionPane.showInputDialog("What is your credit card code?");
         int cCode = Integer.parseInt(cCodeS);
-        CardDetails cardD = new CardDetails(cNum, cMoYr, cCode);
+
 
         // Calculate total cost with promotions
+        int total = 0;
+        for(int i = 0; i < bookNum; i++){
+          total += buyerGui.cart.getBooks().get(i).getPrice();
+        }
+
+        for(int i = 0; i < promoNum; i++){
+          total -= buyerGui.cart.getPromotions().get(i).getDiscount();
+        }
+
+        // final confirmation
+        Object[] options = { "Confirm", "Cancel" };
+        int selection = JOptionPane.showOptionDialog(null, "Your total is $" + total + ", do you wish to confirm your order?", "Order Confirmation",
+        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+        null, options, options[0]);
+        if(selection == 1){
+          JOptionPane.showMessageDialog(null, "Your order was Canceled");
+          break;
+        }
+
 
         // Create payment
+        Payment payment = new Payment(buyerGui.buyer.getUserID(),
+                    buyerGui.cart.getBooks(), buyerGui.cart.getPromotions(),
+                    cNum, cMoYr, cCode);
 
         // Update inventory DB
 
-        //
-
+        // clear the cart
+        cart.clear();
+        updateCart();
       } catch(Exception e){
         JOptionPane.showMessageDialog(null, "Your order was Canceled");
       }
