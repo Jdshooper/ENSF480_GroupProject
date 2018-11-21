@@ -464,7 +464,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     }
 
     /**
-     * TODO Finish this method - Jesse
      * a method that asks for credit card info and then places the order
      */
     private void placeOrder(){
@@ -510,14 +509,18 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
                     cNum, cMoYr, cCode);
 
         // add payment to PaymentDB
-        int result = payControl.addPayment(payment);
-        if(result == -1){
+        int payResult = payControl.addPayment(payment);
+        if(payResult == -1){
           JOptionPane.showMessageDialog(null, "There was an error in your payment. Your order was Canceled.");
           return;
         }
 
         // Update inventory DB
-        
+        int invResult = buyerGui.invControl.updateInventory(buyerGui.cart.getBooks());
+        if(invResult == -1){
+          JOptionPane.showMessageDialog(null, "There was an error in updating the InventoryDB.");
+          return;
+        }
 
         // clear the cart
         cart.clear();
@@ -529,7 +532,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
     /**
      * a method that adds a searched book to the cart
-     * TODO Check that only amount in inventory is added to cart - Jesse
      */
     private void addToCart(){
       try{

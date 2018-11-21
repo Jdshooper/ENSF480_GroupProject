@@ -48,13 +48,6 @@ public class PaymentDBBroker {
 			throw new NoDatabaseConnectionException("in addPayment function");
 		}
 
-		// private int id;
-		// private int userID;
-		// // Details of the transaction:
-		// private ArrayList<Document> books;
-		// private ArrayList<Promotion> promotions;
-		// private CardDetails cardDetails;
-
 		ArrayList<Payment> payments=database.getPaymentList();
 		if(payments.size() == 0) {
 			System.out.println("The PaymentDB is empty!");
