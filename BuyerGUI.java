@@ -41,6 +41,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
         regControl=new RegistrationController();
         invControl=new InventoryController();
+        payControl=new PaymentController();
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -370,6 +371,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public Cart cart;
     public RegistrationController regControl;
     public InventoryController invControl;
+    public PaymentController payControl;
     public Buyer buyer;
     public ArrayList<DocStock> searchResults;
 
@@ -493,12 +495,13 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         // final confirmation
         Object[] options = { "Confirm", "Cancel" };
         int selection = JOptionPane.showOptionDialog(null, "Your total is $" + total + ", do you wish to confirm your order?", "Order Confirmation",
-        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
         null, options, options[0]);
         if(selection == 1){
           JOptionPane.showMessageDialog(null, "Your order was Canceled");
-          break;
+          return;
         }
+
 
 
         // Create payment
@@ -506,7 +509,15 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
                     buyerGui.cart.getBooks(), buyerGui.cart.getPromotions(),
                     cNum, cMoYr, cCode);
 
+        // add payment to PaymentDB
+        int result = payControl.addPayment(payment);
+        if(result == -1){
+          JOptionPane.showMessageDialog(null, "There was an error in your payment. Your order was Canceled.");
+          return;
+        }
+
         // Update inventory DB
+        
 
         // clear the cart
         cart.clear();

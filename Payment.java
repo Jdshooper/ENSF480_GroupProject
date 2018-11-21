@@ -16,6 +16,12 @@ public class Payment {
 		this.books = b;
 		this.promotions = p;
 	}
+	public ArrayList<Document> getBooks(){
+		return books;
+	}
+	public ArrayList<Promotion> getPromotions(){
+		return promotions;
+	}
 	/**
 	 * @return the userID
 	 */

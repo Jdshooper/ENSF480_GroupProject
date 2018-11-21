@@ -16,4 +16,12 @@ public class PaymentController {
 			return -1;
 		}
 	}
+	public int addPayment(Payment p){
+		try{
+			return dbBroker.addPayment(p);
+		}catch(NoDatabaseConnectionException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 }
