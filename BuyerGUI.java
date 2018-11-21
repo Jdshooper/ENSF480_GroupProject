@@ -447,13 +447,22 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
       if(index > bookNum){ // if promo
         buyerGui.cart.getPromotions().remove(index-(bookNum+1));
       } else { // else book
+        // adds quantity back to book
+        Document d = buyerGui.cart.getBooks().get(index-1);
+        for(int i = 0; i<buyerGui.searchResults.size(); i++){
+          if(buyerGui.searchResults.get(i).getDoc() == d){
+            buyerGui.searchResults.get(i).setQuantity(buyerGui.searchResults.get(i).getQuantity() + 1);
+            break;
+          }
+        }
+
         buyerGui.cart.getBooks().remove(index-1);
       }
       updateCart();
     }
 
     /**
-     * TODO Finish this method
+     * TODO Finish this method - Jesse
      * a method that asks for credit card info and then places the order
      */
     private void placeOrder(){
@@ -471,11 +480,13 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
         int cCode = Integer.parseInt(cCodeS);
         CardDetails cardD = new CardDetails(cNum, cMoYr, cCode);
 
+        // Calculate total cost with promotions
+
         // Create payment
 
         // Update inventory DB
 
-        // 
+        //
 
       } catch(Exception e){
         JOptionPane.showMessageDialog(null, "Your order was Canceled");
@@ -484,14 +495,20 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 
     /**
      * a method that adds a searched book to the cart
+     * TODO Check that only amount in inventory is added to cart - Jesse
      */
     private void addToCart(){
       try{
         int index = jList2.getSelectedIndex();
         if(index == -1) return;
+        if(buyerGui.searchResults.get(index).getQuantity() == 0){
+          JOptionPane.showMessageDialog(null, "Max amount of " + buyerGui.searchResults.get(index).getDoc().getName() + " added to cart.");
+          return;
+        }
         buyerGui.cart.getBooks().add(buyerGui.searchResults.get(index).getDoc());
         updateCart();
         JOptionPane.showMessageDialog(null, "Added item to cart.");
+        buyerGui.searchResults.get(index).setQuantity(buyerGui.searchResults.get(index).getQuantity() - 1);
       }
       catch(Exception e){
         JOptionPane.showMessageDialog(null, "Error: order not made.");
@@ -538,7 +555,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      */
     private void refreshPromotions(){
     	if(regControl.getRegistration(buyerGui.buyer.getUserID())==1){
-    		
+
     	}
     }
 
