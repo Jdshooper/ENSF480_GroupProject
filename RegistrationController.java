@@ -31,7 +31,9 @@ public class RegistrationController {
 	}
 	public int getPromotions(int buyerID, ArrayList<Promotion> promotions){
 		try {
-			return dbBroker.getPromotions(buyerID, promotions);
+			//return dbBroker.getPromotions(buyerID, promotions);
+			int x=dbBroker.getPromotions(buyerID, promotions);
+			return x;
 		}catch(NoDatabaseConnectionException e) {
 			e.printStackTrace();
 			return -1;

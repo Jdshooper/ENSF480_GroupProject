@@ -55,11 +55,11 @@ public class RegisteredBuyerDBBroker {
 		ArrayList<Buyer> buyers=database.getBuyerList();
 		int buyerIndex=findBuyer(buyerID);
 		if(buyers.get(buyerIndex).getRegistered()) {
-			promotions=database.getPromotionList();
-			for(int i=0; i<promotions.size(); i++) {
+			ArrayList<Promotion> promotionList=database.getPromotionList();
+			for(int i=0; i<promotionList.size(); i++) {
 				Date current=new Date();
-				while(promotions.get(i).getValidUntil().before(current)) {
-					promotions.remove(i);
+				if(promotionList.get(i).getValidUntil().after(current)) {
+					promotions.add(promotionList.get(i));
 				}
 			}
 			database.setPromotionList(promotions);

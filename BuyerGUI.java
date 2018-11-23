@@ -281,14 +281,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        // Uncomment what is below later when Reg is made
-
-      /*  if(regControl.getRegistration(buyerID)==1)
-        	jTextPane1.replaceSelection("Registered");
-        else if(regControl.getRegistration(buyerID)==0)
-        	jTextPane1.replaceSelection("Not Registered");
-        else if(regControl.getRegistration(buyerID)==-1)
-        	jTextPane1.replaceSelection("Database error");*/
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -357,6 +349,20 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
 		this.searchResults = searchResults;
 	}
 
+	/**
+	 * @return the promotions
+	 */
+	public ArrayList<Promotion> getPromotions() {
+		return promotions;
+	}
+
+	/**
+	 * @param promotions the promotions to set
+	 */
+	public void setPromotions(ArrayList<Promotion> promotions) {
+		this.promotions = promotions;
+	}
+
 	private void UpdateSearchResult()
     {
     	jListModel2.clear();
@@ -374,6 +380,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     public PaymentController payControl;
     public Buyer buyer;
     public ArrayList<DocStock> searchResults;
+    public ArrayList<Promotion> promotions;
 
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
@@ -447,7 +454,7 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
       int bookNum = buyerGui.cart.getBooks().size();
       int promoNum = buyerGui.cart.getPromotions().size();
       if(index > bookNum){ // if promo
-        buyerGui.cart.getPromotions().remove(index-(bookNum+1));
+        buyerGui.cart.getPromotions().remove(index-(bookNum+2));
       } else { // else book
         // adds quantity back to book
         Document d = buyerGui.cart.getBooks().get(index-1);
@@ -583,15 +590,49 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
      * add to cart
      */
     private void addPromotions(){
-
+    	try{
+            int index = jList3.getSelectedIndex();
+        	if(regControl.getRegistration(buyerGui.buyer.getUserID())==0) {
+            	JOptionPane.showMessageDialog(null, "Please register for promotions to add one to your cart.");
+            	return;
+        	}
+            if(index == -1) {
+            	JOptionPane.showMessageDialog(null, "You have not selected a promotion.");
+            	return;
+            }
+            for(int i=0; i<buyerGui.cart.getPromotions().size();i++) {
+            	if(buyerGui.cart.getPromotions().get(i).getId()==buyerGui.getPromotions().get(index).getId()) {
+                    JOptionPane.showMessageDialog(null, "This promotion has already been added to the cart.");
+                    return;
+            	}
+            }
+            buyerGui.cart.getPromotions().add(buyerGui.getPromotions().get(index));
+            updateCart();
+            JOptionPane.showMessageDialog(null, "Added promotion to cart.");
+          }
+          catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: order not made.");
+          }
     }
 
     /**
      * a method that gets the latest promotions if the user is registered
      */
     private void refreshPromotions(){
-    	if(regControl.getRegistration(buyerGui.buyer.getUserID())==1){
-
+    	setPromotions(new ArrayList<Promotion>());
+    	int result=regControl.getPromotions(buyerGui.buyer.getUserID(), getPromotions());
+    	if(result==1) {
+    		jListModel3.clear();
+    		for(int i=0; i<getPromotions().size(); i++)
+        		jListModel3.addElement(getPromotions().get(i).toString());
+    	}
+    	else if(result==0){
+    		jListModel3.clear();
+    		jListModel3.addElement("You are not registered for promotions.");
+    	}
+    	else if(result==-1) {
+    		jListModel3.clear();
+    		jListModel3.addElement("Database Error");
     	}
     }
 
@@ -601,7 +642,6 @@ public class BuyerGUI extends javax.swing.JFrame implements GUIStrategy{
     private void displayStatus(){
         if(regControl.getRegistration(buyerGui.buyer.getUserID())==1){
           buyerGui.jTextPane1.setText("Registered");
-          System.out.println(jTextPane1.getText());
         }
         else{
           buyerGui.jTextPane1.setText("Unregistered");

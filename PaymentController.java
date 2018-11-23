@@ -8,14 +8,14 @@ public class PaymentController {
 			e.printStackTrace();
 		}
 	}
-	public int createPayment(int id, int cardNum, String expiryDate, int verificationNo) {
-		try {
-			return dbBroker.createPayment(id, cardNum, expiryDate, verificationNo);
-		}catch(NoDatabaseConnectionException e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
+//	public int createPayment(int id, int cardNum, String expiryDate, int verificationNo) {
+//		try {
+//			return dbBroker.createPayment(id, cardNum, expiryDate, verificationNo);
+//		}catch(NoDatabaseConnectionException e) {
+//			e.printStackTrace();
+//			return -1;
+//		}
+//	}
 	public int addPayment(Payment p){
 		try{
 			return dbBroker.addPayment(p);

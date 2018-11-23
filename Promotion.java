@@ -14,7 +14,7 @@ public class Promotion {
 	}
 
 	public String toString(){
-		return "" + id + " " + name + " " + validUntil + " $" + discount;
+		return "" + id + " " + name + " Expires: " + validUntil + " Discount: $" + discount;
 	}
 	/**
 	 * @return the id
